@@ -42,63 +42,48 @@ Tài liệu này mô tả các sơ đồ quy trình nghiệp vụ cho hệ thố
 
 ---
 
-## 1. Sơ đồ Use Case (Use Case Diagram)
-
-Sơ đồ dưới đây xác định các tác nhân (Actors) và các chức năng (Use Cases) tương ứng mà mỗi tác nhân có thể thực hiện trong hệ thống.
-
-
+### 1. Sơ đồ Use Case (Use Case Diagram)
 
 ```mermaid
 flowchart LR
-    %% Định nghĩa Actors
+    %% Dinh nghia Actors
     Admin([Admin])
-    Customer([Customer <br/> Guest/B2C/B2B])
+    Customer([Customer])
     WarehouseStaff([Warehouse Staff])
 
-    %% Định nghĩa System Boundary
+    %% Dinh nghia System Boundary
     subgraph Kochi_Lens_System [Hệ thống Kochi Lens]
         direction TB
+        UC1(Quản lý Sản phẩm - PIM)
+        UC2(Thiết lập Giá & Thuế VAT)
+        UC3(Quản lý Khách hàng)
         
-        %% Use cases của Admin
-        UC_PIM(Quản lý Sản phẩm - PIM)
-        UC_PriceTax(Thiết lập Giá & Thuế VAT)
-        UC_ManageUsers(Quản lý Khách hàng)
+        UC4(Tìm kiếm & Xem sản phẩm)
+        UC5(Quản lý Giỏ hàng)
+        UC6(Thanh toán đơn hàng)
+        UC7(Theo dõi trạng thái đơn)
         
-        %% Use cases của Customer
-        UC_Browse(Tìm kiếm & Xem sản phẩm)
-        UC_Cart(Quản lý Giỏ hàng)
-        UC_Checkout(Thanh toán đơn hàng)
-        UC_Track(Theo dõi trạng thái đơn)
+        UC8(Cập nhật Tồn kho Realtime)
+        UC9(Đóng gói & Xuất kho - Delivery)
         
-        %% Use cases của Warehouse Staff
-        UC_Inventory(Cập nhật Tồn kho Realtime)
-        UC_Delivery(Đóng gói & Xuất kho - Delivery)
-        
-        %% Use cases chung / OMS
-        UC_OMS(Xử lý Đơn hàng - OMS)
+        UC10(Xử lý Đơn hàng - OMS)
     end
 
-    %% Mapping Actors to Use Cases
-    Admin --> UC_PIM
-    Admin --> UC_PriceTax
-    Admin --> UC_ManageUsers
-    Admin --> UC_OMS
+    %% Mapping
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC10
 
-    Customer --> UC_Browse
-    Customer --> UC_Cart
-    Customer --> UC_Checkout
-    Customer --> UC_Track
+    Customer --> UC4
+    Customer --> UC5
+    Customer --> UC6
+    Customer --> UC7
 
-    WarehouseStaff --> UC_Inventory
-    WarehouseStaff --> UC_Delivery
-    WarehouseStaff --> UC_OMS
-
-    %% Styling cho Git
-    classDef actorStyle fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef systemStyle fill:#fff,stroke:#000,stroke-width:1px,stroke-dasharray: 5 5;
-    class Admin,Customer,WarehouseStaff actorStyle;
-    class Kochi_Lens_System systemStyle;
-
+    WarehouseStaff --> UC8
+    WarehouseStaff --> UC9
+    WarehouseStaff --> UC10
+    
 ## 3.2. Activity Flow
 
 Start  
