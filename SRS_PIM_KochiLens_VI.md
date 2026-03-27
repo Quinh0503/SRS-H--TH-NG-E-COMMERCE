@@ -36,35 +36,68 @@ PIM là nguồn dữ liệu trung tâm cho:
 
 ## 3.1. Use Case
 
-### UC-01: Quản lý sản phẩm (Admin)
-- Tạo sản phẩm
-- Cập nhật sản phẩm
-- Xóa sản phẩm
+# Mô hình hóa quy trình hệ thống Kochi Lens
 
-### UC-02: Quản lý biến thể (Admin)
-- Tạo biến thể (màu, size)
-- Gán SKU cho từng biến thể
-- Quản lý SKU, barcode, giá, VAT  
-- Quản lý biến thể  
-
-
-### UC-03: Xem sản phẩm (Customer)
-- Xem danh sách
-- Xem chi tiết
-- Chọn biến thể  
-- Kiểm tra tồn kho  
-- Thêm vào giỏ hàng 
-
-### UC-04: Chọn biến thể (Customer)
-- Chọn biến thể
-- Kiểm tra tồn kho
-- Thêm vào giỏ
-
-### UC-05: Cập nhật tồn kho (Warehouse)
-- Cập nhật số lượng
-- Đồng bộ hệ thống
+Tài liệu này mô tả các sơ đồ quy trình nghiệp vụ cho hệ thống thương mại điện tử thiết bị ngành ảnh Kochi Lens, tập trung vào chức năng Quản lý Sản phẩm (PIM) và luồng xử lý đơn hàng.
 
 ---
+
+## 1. Sơ đồ Use Case (Use Case Diagram)
+
+Sơ đồ dưới đây xác định các tác nhân (Actors) và các chức năng (Use Cases) tương ứng mà mỗi tác nhân có thể thực hiện trong hệ thống.
+
+
+
+```mermaid
+flowchart LR
+    %% Định nghĩa Actors
+    Admin([Admin])
+    Customer([Customer <br/> Guest/B2C/B2B])
+    WarehouseStaff([Warehouse Staff])
+
+    %% Định nghĩa System Boundary
+    subgraph Kochi_Lens_System [Hệ thống Kochi Lens]
+        direction TB
+        
+        %% Use cases của Admin
+        UC_PIM(Quản lý Sản phẩm - PIM)
+        UC_PriceTax(Thiết lập Giá & Thuế VAT)
+        UC_ManageUsers(Quản lý Khách hàng)
+        
+        %% Use cases của Customer
+        UC_Browse(Tìm kiếm & Xem sản phẩm)
+        UC_Cart(Quản lý Giỏ hàng)
+        UC_Checkout(Thanh toán đơn hàng)
+        UC_Track(Theo dõi trạng thái đơn)
+        
+        %% Use cases của Warehouse Staff
+        UC_Inventory(Cập nhật Tồn kho Realtime)
+        UC_Delivery(Đóng gói & Xuất kho - Delivery)
+        
+        %% Use cases chung / OMS
+        UC_OMS(Xử lý Đơn hàng - OMS)
+    end
+
+    %% Mapping Actors to Use Cases
+    Admin --> UC_PIM
+    Admin --> UC_PriceTax
+    Admin --> UC_ManageUsers
+    Admin --> UC_OMS
+
+    Customer --> UC_Browse
+    Customer --> UC_Cart
+    Customer --> UC_Checkout
+    Customer --> UC_Track
+
+    WarehouseStaff --> UC_Inventory
+    WarehouseStaff --> UC_Delivery
+    WarehouseStaff --> UC_OMS
+
+    %% Styling cho Git
+    classDef actorStyle fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef systemStyle fill:#fff,stroke:#000,stroke-width:1px,stroke-dasharray: 5 5;
+    class Admin,Customer,WarehouseStaff actorStyle;
+    class Kochi_Lens_System systemStyle;
 
 ## 3.2. Activity Flow
 
